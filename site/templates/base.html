@@ -17,7 +17,7 @@
       <div id="content">
         <div style="float: right;">
           {% if user %}
-          {{ user.nickname }} | <a href="{{ logout_url }}">Logout</a>
+          {{ user.nickname }} | <a href="{{ logout_url }}">Logout</a> {% if prev_scriptlets %} | <a href="/saved/">Saved Scriptlets </a> {% endif %}
           {% else %}
           Not logged in. <a href="{{ login_url }}">Login?</a>
           {% endif %}

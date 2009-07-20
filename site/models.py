@@ -12,6 +12,9 @@ class Script(db.Model):
     created = db.DateTimeProperty(auto_now_add=True)
     updated = db.DateTimeProperty(auto_now=True)
     user = db.UserProperty(auto_current_user_add=True)
+    #added two new entries so users can provide their scripts with descriptions/friendly names
+    description = db.StringProperty() #optional
+    user_friendly_name = db.StringProperty() #optional
     
     def __init__(self, *args, **kwargs):
         kwargs['name'] = kwargs.get('name', baseN(abs(hash(time.time())), 36))

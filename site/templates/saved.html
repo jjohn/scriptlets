@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block content %}
+<style type="text/css">
+  form iframe { border: 1px solid black !important; }
+  .table-desc {width: "100%", margin-bottom: 10px; margin-top: 25px;border-spacing: 30pt 10pt;}
+  .cell-data {text-align: center}
+</style>
+<form method="post">
+
+<table width="100%" class="table-desc">
+  <tr><th width="5%"></th><th width="15%">Name</th><th width="50%">Description</th><th width="15%">Edit</th><th width="15%">Run/View</th></tr>
+  {% for q in query %}
+  <tr><td width="5%"><input type="checkbox" name="delete" value="{{ q.name }}" /></td><td width="15%" class="cell-data">{{ q.user_friendly_name }}</td><td width="50%" class="cell-data"> {{ q.description }} </td><td width="15%" class="cell-data"><a href="/edit/{{ q.name }}">edit {{ q.name }}</a></td><td width="15%" class="cell-data"><a href="/view/{{ q.name }}">{{ q.name }}</a></td></tr>
+  {% endfor %}  
+   <tr><td></td><td></td><td class="cell-data"><input type="submit" value="Delete Scriptlet(s)" /></td><td></td><tr>
+</table>
+
+
+</form>
+
+{% endblock %}

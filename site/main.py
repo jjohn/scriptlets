@@ -18,7 +18,11 @@ class MainHandler(webapp.RequestHandler):
             self.redirect('/view/%s' % script.name)
         else:
             if user:
-                params = {'user': user, 'logout_url': users.create_logout_url("/")}
+                prev_scriptlets = False
+                if Script.all().filter('user =', user).count():
+                   #this user has previous saved scriptlets
+                   prev_scriptlets = True
+                params = {'user': user, 'logout_url': users.create_logout_url("/"), 'prev_scriptlets':prev_scriptlets,}
             else:
                 params = {'user': user, 'login_url': users.create_login_url('/')}
             self.response.out.write(template.render('templates/main.html', params))
@@ -26,9 +30,12 @@ class MainHandler(webapp.RequestHandler):
     def post(self):
         user = users.get_current_user()
         language = self.request.POST['language']
+        description = self.request.POST['description'].strip()
+        user_friendly_name = self.request.POST['user_friendly_name'].strip()
+    
         code = self.request.POST['%s-code' % language]
         if user:
-            script = Script(language=language, code=code)
+            script = Script(language=language, code=code, description=description or 'None', user_friendly_name=user_friendly_name or 'None')
             script.put()
             self.redirect('/view/%s' % script.name)
         else:

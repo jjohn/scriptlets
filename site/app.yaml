@@ -14,5 +14,11 @@ handlers:
   upload: static/robots.txt
 - url: /static
   static_dir: static
+- url: /saved/
+  login: required
+  script: handlers.py
+- url: /edit/.*
+  login: required
+  script: handlers.py
 - url: /.*
   script: handlers.py
